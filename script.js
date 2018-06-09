@@ -197,6 +197,7 @@ function applyGravity() {
 // occurs, a specific callback function is run.
 function checkCollisions() {
     player.collide(platforms, platformCollision);
+    player.collide(monsters, playerMonsterCollision);
     monsters.collide(platforms, platformCollision);
 }
 
@@ -215,9 +216,18 @@ function platformCollision(sprite, platform) {
       }
     }
 }
-
+var defeatedMonster = createSprite(monster.position.x, monster.position.y, 0, 0);
 // Callback function that runs when the player collides with a monster.
 function playerMonsterCollision(player, monster) {
+  if(player.touching.bottom) {
+    monster.remove();
+
+defeatedMonster.addImage(monsterDefeatImage);
+defeatedMonster.mirrorX(monster.mirrorX());
+defeatedMonster.scale = 0.25;
+defeatedMonster.life = 40;
+
+  }
 
 }
 
